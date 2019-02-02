@@ -83,6 +83,29 @@
     	//todo: implement the sort
     	return null;
    }//end mergeSortRecursive
+    
+    private void sort(double a[], double aux[], int low, int high) {
+    	//gotten to size of 1 or zero break out
+    	if(high <= low) 
+    		return;
+    	//where to split the array
+    	int mid = low + (high-low)/2;
+    	//sort left half
+    	sort(a, aux, low, mid);
+    	//sort right half
+    	sort(a, aux, mid+1, high);
+    	//merge results
+    	merge(a, aux, low, mid, high);
+    }
+    
+    private void merge(double a[], double aux[], int low, int mid, int high) {
+    	//copy the original array into the auxiliary array
+    	for(int i = low; i <= high; i++) {
+    		aux[i] = a[i];
+    	}
+    	//merge the array back into original in correct order
+    	
+    }
     	
     
     /**
