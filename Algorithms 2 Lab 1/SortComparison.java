@@ -18,8 +18,20 @@
      *
      */
     static double [] insertionSort (double a[]){
+		for (int i = 1; i < a.length; i++) {
+			boolean done = false;
+			for (int j = i; j > 0 && !done;  j--) {
+				if (a[j] < a[j - 1]) {
+					double temp = a[j];
+					a[j] = a[j - 1];
+					a[j - 1] = temp;
+				}
+				else
+					done = true;
+			}
+		}
+		return a;
 
-        //todo: implement the sort
     }//end insertionsort
 
     /**
@@ -32,7 +44,7 @@
     static double [] quickSort (double a[]){
 	
 		 //todo: implement the sort
-
+    	return null;
     }//end quicksort
 
     /**
@@ -53,7 +65,7 @@
     static double[] mergeSortIterative (double a[]) {
 
 		 //todo: implement the sort
-	
+    	return null;
     }//end mergesortIterative
     
     
@@ -69,7 +81,7 @@
     	
 
     	//todo: implement the sort
-	
+    	return null;
    }//end mergeSortRecursive
     	
     
@@ -81,9 +93,17 @@
      *
      */
     static double [] selectionSort (double a[]){
-
-         //todo: implement the sort
-
+		for (int i = 0; i < a.length - 1; i++) {
+			int minUnsorted = i;
+			for (int j = i + 1; j < a.length; j++) {
+				if (a[j] < a[minUnsorted])
+					minUnsorted = j;
+			}
+			double temp = a[minUnsorted];
+			a[minUnsorted] = a[i];
+			a[i] = temp;
+		}
+    	return a;
     }//end selectionsort
 
    
@@ -92,6 +112,11 @@
     public static void main(String[] args) {
 
         //todo: do experiments as per assignment instructions
+    	double[] unsortedArray = {8,3,4,1,44,23,0};
+    	double[] sortedArray = selectionSort(unsortedArray);
+    	for(int i = 0; i < sortedArray.length; i++) {
+    		System.out.println("" + sortedArray[i]);
+    	}
     }
 
  }//end class
