@@ -81,10 +81,12 @@
     	
 
     	//todo: implement the sort
-    	return null;
+    	double aux[] = new double[a.length];
+    	sort(a, aux, 0, a.length-1);
+    	return a;
    }//end mergeSortRecursive
     
-    private void sort(double a[], double aux[], int low, int high) {
+    private static void sort(double a[], double aux[], int low, int high) {
     	//gotten to size of 1 or zero break out
     	if(high <= low) 
     		return;
@@ -98,13 +100,24 @@
     	merge(a, aux, low, mid, high);
     }
     
-    private void merge(double a[], double aux[], int low, int mid, int high) {
+    private static void merge(double a[], double aux[], int low, int mid, int high) {
     	//copy the original array into the auxiliary array
     	for(int i = low; i <= high; i++) {
     		aux[i] = a[i];
     	}
     	//merge the array back into original in correct order
-    	
+    	int i = low;
+    	int j = mid + 1;
+    	for(int k = low; k < high; k++) {
+    		if(i > mid)
+    			a[k] = aux[j++];
+    		else if(j > high)
+    			a[k] = aux[i++];
+    		else if(aux[j] < aux[i])
+    			a[k] = aux[j++];
+    		else
+    			a[k] = aux[i++];
+    	}
     }
     	
     
@@ -136,7 +149,7 @@
 
         //todo: do experiments as per assignment instructions
     	double[] unsortedArray = {8,3,4,1,44,23,0};
-    	double[] sortedArray = selectionSort(unsortedArray);
+    	double[] sortedArray = mergeSortRecursive(unsortedArray);
     	for(int i = 0; i < sortedArray.length; i++) {
     		System.out.println("" + sortedArray[i]);
     	}
