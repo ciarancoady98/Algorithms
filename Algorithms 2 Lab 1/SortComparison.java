@@ -108,11 +108,15 @@
     	//merge the array back into original in correct order
     	int i = low;
     	int j = mid + 1;
-    	for(int k = low; k < high; k++) {
+    	for(int k = low; k <= high; k++) {
+    		//if left sub array has all been copied
     		if(i > mid)
     			a[k] = aux[j++];
+    		//if right sub array has all been copied
     		else if(j > high)
     			a[k] = aux[i++];
+    		//check which element is smaller and 
+    		//copy it into the original array
     		else if(aux[j] < aux[i])
     			a[k] = aux[j++];
     		else
@@ -148,7 +152,7 @@
     public static void main(String[] args) {
 
         //todo: do experiments as per assignment instructions
-    	double[] unsortedArray = {8,3,4,1,44,23,0};
+    	double[] unsortedArray = {5,4,7,12};
     	double[] sortedArray = mergeSortRecursive(unsortedArray);
     	for(int i = 0; i < sortedArray.length; i++) {
     		System.out.println("" + sortedArray[i]);
