@@ -30,6 +30,10 @@ public class SortComparisonTest
     @Test
     public void testEmpty()
     {
+    	double emptyTestArray[] = null;
+    	SortComparison.selectionSort(emptyTestArray);
+    	SortComparison.insertionSort(emptyTestArray);
+    	SortComparison.mergeSortRecursive(emptyTestArray);
     }
 
 
@@ -45,6 +49,8 @@ public class SortComparisonTest
     public static void main(String[] args)
     {
         //TODO: implement this method
+    	SortComparisonTest test = new SortComparisonTest();
+    	test.testEmpty();
     }
 
 }

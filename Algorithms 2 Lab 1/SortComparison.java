@@ -18,7 +18,7 @@
      *
      */
     static double [] insertionSort (double a[]){
-		for (int i = 1; i < a.length; i++) {
+		for (int i = 1; a != null && i < a.length; i++) {
 			boolean done = false;
 			for (int j = i; j > 0 && !done;  j--) {
 				if (a[j] < a[j - 1]) {
@@ -78,11 +78,10 @@
      * @return after the method returns, the array must be in ascending sorted order.
      */
     static double[] mergeSortRecursive (double a[]) {
-    	
-
-    	//todo: implement the sort
-    	double aux[] = new double[a.length];
-    	sort(a, aux, 0, a.length-1);
+    	if(a != null) {
+    		double aux[] = new double[a.length];
+        	sort(a, aux, 0, a.length-1);
+    	}
     	return a;
    }//end mergeSortRecursive
     
@@ -133,7 +132,7 @@
      *
      */
     static double [] selectionSort (double a[]){
-		for (int i = 0; i < a.length - 1; i++) {
+		for (int i = 0; a != null && i < a.length - 1; i++) {
 			int minUnsorted = i;
 			for (int j = i + 1; j < a.length; j++) {
 				if (a[j] < a[minUnsorted])
