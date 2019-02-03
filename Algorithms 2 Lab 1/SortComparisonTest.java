@@ -35,6 +35,45 @@ public class SortComparisonTest
     	SortComparison.insertionSort(emptyTestArray);
     	SortComparison.mergeSortRecursive(emptyTestArray);
     }
+    
+    // ----------------------------------------------------------
+    /**
+     * Check that the methods work for arrays of size 1
+     */
+    @Test
+    public void testSize1()
+    {
+    	double size1Array[] = {1};
+    	SortComparison.selectionSort(size1Array);
+    	SortComparison.insertionSort(size1Array);
+    	SortComparison.mergeSortRecursive(size1Array);
+    }
+    
+    // ----------------------------------------------------------
+    /**
+     * Check that the methods work for arrays of size 2
+     */
+    @Test
+    public void testSize2()
+    {
+    	double size2Array[] = {2};
+    	SortComparison.selectionSort(size2Array);
+    	SortComparison.insertionSort(size2Array);
+    	SortComparison.mergeSortRecursive(size2Array);
+    }
+    
+    // ----------------------------------------------------------
+    /**
+     * Check that the methods work for arrays of size 2
+     */
+    @Test
+    public void testSortedArray()
+    {
+    	double sortedArray[] = {1,2,3,4,5,6,7,8,9,10};
+    	SortComparison.selectionSort(sortedArray);
+    	SortComparison.insertionSort(sortedArray);
+    	SortComparison.mergeSortRecursive(sortedArray);
+    }
 
 
     // TODO: add more tests here. Each line of code and ech decision in Collinear.java should
@@ -48,7 +87,6 @@ public class SortComparisonTest
      */
     public static void main(String[] args)
     {
-        //TODO: implement this method
     	SortComparisonTest test = new SortComparisonTest();
     	test.testEmpty();
     }

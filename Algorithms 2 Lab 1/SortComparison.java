@@ -64,11 +64,25 @@
 
     static double[] mergeSortIterative (double a[]) {
 
-		 //todo: implement the sort
-    	return null;
+    	if(a != null) {
+    		double aux[] = new double[a.length];
+    		mergeSortIterative(a, aux);
+    	}
+    	return a;
     }//end mergesortIterative
     
-    
+    private static void mergeSortIterative(double a[], double aux[]) {
+    	//Divide the array into sub arrays of size starting at 1
+    	for(int subSize = 1; subSize < a.length; subSize*=2) {
+    		//increment through sub arrays 2 at a time
+    		for(int low = 0; low < a.length-subSize; low+= 2*subSize) {
+    			//take to adjacent sub arrays and merge them
+    			//high is calculated in case the sub array divisions 
+    			//would cause the incrementation to go off the end of the array
+    			merge(a, aux, low, low+subSize-1, Math.min(low+(2*subSize)-1, a.length-1));
+    		}
+    	}
+    }
     
     /**
      * Sorts an array of doubles using recursive implementation of Merge Sort.
@@ -80,21 +94,21 @@
     static double[] mergeSortRecursive (double a[]) {
     	if(a != null) {
     		double aux[] = new double[a.length];
-        	sort(a, aux, 0, a.length-1);
+    		mergeSortRecursive(a, aux, 0, a.length-1);
     	}
     	return a;
    }//end mergeSortRecursive
     
-    private static void sort(double a[], double aux[], int low, int high) {
+    private static void mergeSortRecursive(double a[], double aux[], int low, int high) {
     	//gotten to size of 1 or zero break out
     	if(high <= low) 
     		return;
     	//where to split the array
     	int mid = low + (high-low)/2;
     	//sort left half
-    	sort(a, aux, low, mid);
+    	mergeSortRecursive(a, aux, low, mid);
     	//sort right half
-    	sort(a, aux, mid+1, high);
+    	mergeSortRecursive(a, aux, mid+1, high);
     	//merge results
     	merge(a, aux, low, mid, high);
     }
@@ -152,7 +166,7 @@
 
         //todo: do experiments as per assignment instructions
     	double[] unsortedArray = {5,4,7,12};
-    	double[] sortedArray = mergeSortRecursive(unsortedArray);
+    	double[] sortedArray = mergeSortIterative(unsortedArray);
     	for(int i = 0; i < sortedArray.length; i++) {
     		System.out.println("" + sortedArray[i]);
     	}
