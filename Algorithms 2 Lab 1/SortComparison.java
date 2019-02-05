@@ -9,6 +9,15 @@
  */
 
  class SortComparison {
+	 
+	 /*This method swaps to doubles in an array of doubles at indexes
+	 element1 and element2
+	 */
+	 private static void swap(double a[], int element1, int element2) {
+		 double temp = a[element1];
+		 a[element1] = a[element2];
+		 a[element2] = temp;
+	 }
 
     /**
      * Sorts an array of doubles using InsertionSort.
@@ -22,9 +31,7 @@
 			boolean done = false;
 			for (int j = i; j > 0 && !done;  j--) {
 				if (a[j] < a[j - 1]) {
-					double temp = a[j];
-					a[j] = a[j - 1];
-					a[j - 1] = temp;
+					swap(a, j, j-1);
 				}
 				else
 					done = true;
@@ -47,7 +54,7 @@
     		quickSortRecursive(a, 0, a.length-1);
     	}
     	return a;
-    }//end quicksort
+    }
     
     private static void quickSortRecursive(double a[], int low, int high) {
     	if(high<=low) {
@@ -61,7 +68,7 @@
     private static int partition(double a[], int pivotPos, int high) {
     	int i = pivotPos+1;
     	int j = high;
-    	double pivot = a[pivotPos];
+    	//double pivot = a[pivotPos];
     	while(true) {
     		while(a[i]<a[pivotPos] && i<a.length) {
         		i++;
@@ -70,17 +77,13 @@
         		j--;
         	}
         	if(i>j) {
-        		a[pivotPos] = a[j];
-        		a[j] = pivot;
-        		return j;
+        		swap(a, pivotPos, j);
         	}
         	else {
-        		double temp = a[i];
-        		a[i] = a[j];
-        		a[j] = temp;
+        		swap(a, i, j);
         	}
     	}
-    }
+    }//end quicksort
 
     /**
      * Sorts an array of doubles using Merge Sort.
@@ -104,7 +107,7 @@
     		mergeSortIterative(a, aux);
     	}
     	return a;
-    }//end mergesortIterative
+    }
     
     private static void mergeSortIterative(double a[], double aux[]) {
     	//Divide the array into sub arrays of size starting at 1
@@ -117,7 +120,7 @@
     			merge(a, aux, low, low+subSize-1, Math.min(low+(2*subSize)-1, a.length-1));
     		}
     	}
-    }
+    }//end mergesortIterative
     
     /**
      * Sorts an array of doubles using recursive implementation of Merge Sort.
@@ -132,7 +135,7 @@
     		mergeSortRecursive(a, aux, 0, a.length-1);
     	}
     	return a;
-   }//end mergeSortRecursive
+   }
     
     private static void mergeSortRecursive(double a[], double aux[], int low, int high) {
     	//gotten to size of 1 or zero break out
@@ -146,7 +149,7 @@
     	mergeSortRecursive(a, aux, mid+1, high);
     	//merge results
     	merge(a, aux, low, mid, high);
-    }
+    }//end mergeSortRecursive
     
     private static void merge(double a[], double aux[], int low, int mid, int high) {
     	//copy the original array into the auxiliary array
@@ -187,9 +190,7 @@
 				if (a[j] < a[minUnsorted])
 					minUnsorted = j;
 			}
-			double temp = a[minUnsorted];
-			a[minUnsorted] = a[i];
-			a[i] = temp;
+			swap(a, minUnsorted, i);
 		}
     	return a;
     }//end selectionsort
