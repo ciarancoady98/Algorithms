@@ -43,9 +43,44 @@
      */
     static double [] quickSort (double a[]){
 	
-		 //todo: implement the sort
-    	return null;
+    	if(a != null) {
+    		quickSortRecursive(a, 0, a.length-1);
+    	}
+    	return a;
     }//end quicksort
+    
+    private static void quickSortRecursive(double a[], int low, int high) {
+    	if(high<=low) {
+    		return;
+    	}
+    	int pivotPos = partition(a, low, high);
+    	quickSortRecursive(a, low, pivotPos-1);
+    	quickSortRecursive(a, pivotPos+1, high);
+    }
+    
+    private static int partition(double a[], int pivotPos, int high) {
+    	int i = pivotPos+1;
+    	int j = high;
+    	double pivot = a[pivotPos];
+    	while(true) {
+    		while(a[i]<a[pivotPos] && i<a.length) {
+        		i++;
+        	}
+        	while(a[j]>a[pivotPos] && j>=0) {
+        		j--;
+        	}
+        	if(i>j) {
+        		a[pivotPos] = a[j];
+        		a[j] = pivot;
+        		return j;
+        	}
+        	else {
+        		double temp = a[i];
+        		a[i] = a[j];
+        		a[j] = temp;
+        	}
+    	}
+    }
 
     /**
      * Sorts an array of doubles using Merge Sort.
@@ -166,7 +201,7 @@
 
         //todo: do experiments as per assignment instructions
     	double[] unsortedArray = {5,4,7,12};
-    	double[] sortedArray = mergeSortIterative(unsortedArray);
+    	double[] sortedArray = insertionSort(unsortedArray);
     	for(int i = 0; i < sortedArray.length; i++) {
     		System.out.println("" + sortedArray[i]);
     	}
