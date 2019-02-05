@@ -68,7 +68,6 @@
     private static int partition(double a[], int pivotPos, int high) {
     	int i = pivotPos+1;
     	int j = high;
-    	//double pivot = a[pivotPos];
     	while(true) {
     		while(a[i]<a[pivotPos] && i<a.length) {
         		i++;
