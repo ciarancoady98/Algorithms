@@ -68,7 +68,8 @@
     private static int partition(double a[], int pivotPos, int high) {
     	int i = pivotPos+1;
     	int j = high;
-    	while(true) {
+    	boolean swapped = false;
+    	while(!swapped) {
     		while(a[i]<a[pivotPos] && i<a.length) {
         		i++;
         	}
@@ -77,11 +78,14 @@
         	}
         	if(i>j) {
         		swap(a, pivotPos, j);
+        		swapped = true;
         	}
         	else {
         		swap(a, i, j);
+        		swapped = true;
         	}
     	}
+    	return j;
     }//end quicksort
 
     /**
@@ -193,19 +197,6 @@
 		}
     	return a;
     }//end selectionsort
-
-   
-
-
-    public static void main(String[] args) {
-
-        //todo: do experiments as per assignment instructions
-    	double[] unsortedArray = {5,4,7,12};
-    	double[] sortedArray = insertionSort(unsortedArray);
-    	for(int i = 0; i < sortedArray.length; i++) {
-    		System.out.println("" + sortedArray[i]);
-    	}
-    }
 
  }//end class
 
