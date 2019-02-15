@@ -66,28 +66,6 @@
     }
     
     private static int partition(double a[], int pivotPos, int high) {
-    	/*
-    	int i = pivotPos;
-    	int j = high + 1 ;
-    	boolean swapped = false;
-    	while(!swapped) {
-    		while(a[i]<a[pivotPos] && i<a.length) {
-        		i++;
-        	}
-        	while(a[j]>a[pivotPos] && j>=0) {
-        		j--;
-        	}
-        	if(i>j) {
-        		swap(a, pivotPos, j);
-        		swapped = true;
-        	}
-        	else {
-        		swap(a, i, j);
-        		swapped = true;
-        	}
-    	}
-    	return j;
-    	*/
     	int i = pivotPos;
     	int j = high+1;
     	while(true) {

@@ -11,6 +11,19 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+
+/**
+ * 	File Name						Insertion	 MergeIterative	 MergeRecursive		Selection	Quick
+	numbers10.txt						0				0				0			0			0
+	numbers100.txt						0				0				0			0			0
+	numbers1000.txt						7.66			0.33			0			5.33		0.33
+	numbers1000Duplicates.txt			2				0				0			1.33		0.33
+	numbersNearlyOrdered1000.txt		0				0.33			0			1			0
+	numbersReverse1000.txt				1				0				0			0.33		0.66
+	numbersSorted1000.txt				0				0				0.33		0.33		0.66
+ * 
+ */
+
 //-------------------------------------------------------------------------
 /**
  *  Test class for SortComparison.java
@@ -228,37 +241,37 @@ public class SortComparisonTest
         		System.out.println("-\n"
         				+ "-\n"
         				+ "-\n"
-        				+ "-Stats for file " + j);
+        				+ "-Stats for file " + fileNames[j].substring(61));
         		
         		double[] tempArray = numbersArray.clone();
         		timeBefore = System.currentTimeMillis();
         		sort.insertionSort(tempArray);
         		timeAfter = System.currentTimeMillis();
-        		System.out.println("Insertion Sort: " + (timeAfter-timeBefore));
+        		System.out.println("Insertion Sort: " + (timeAfter-timeBefore) + "ms");
         		
         		tempArray = numbersArray.clone();
         		timeBefore = System.currentTimeMillis();
         		sort.mergeSortIterative(tempArray);
         		timeAfter = System.currentTimeMillis();
-        		System.out.println("Merge Sort Iterative: " + (timeAfter-timeBefore));
+        		System.out.println("Merge Sort Iterative: " + (timeAfter-timeBefore) + "ms");
         		
         		tempArray = numbersArray.clone();
         		timeBefore = System.currentTimeMillis();
         		sort.mergeSortRecursive(tempArray);
         		timeAfter = System.currentTimeMillis();
-        		System.out.println("Merge Sort Recursive: " + (timeAfter-timeBefore));
+        		System.out.println("Merge Sort Recursive: " + (timeAfter-timeBefore) + "ms");
         		
         		tempArray = numbersArray.clone();
         		timeBefore = System.currentTimeMillis();
         		sort.selectionSort(tempArray);
         		timeAfter = System.currentTimeMillis();
-        		System.out.println("Selection Sort: " + (timeAfter-timeBefore));
+        		System.out.println("Selection Sort: " + (timeAfter-timeBefore) + "ms");
         		
         		tempArray = numbersArray.clone();
         		timeBefore = System.currentTimeMillis();
         		sort.quickSort(tempArray);
         		timeAfter = System.currentTimeMillis();
-        		System.out.println("Quick Sort: " + (timeAfter-timeBefore));
+        		System.out.println("Quick Sort: " + (timeAfter-timeBefore) + "ms");
         		
         	}catch(Exception e) {System.out.println(e);}
     		
