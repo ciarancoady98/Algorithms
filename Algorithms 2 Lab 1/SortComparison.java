@@ -66,8 +66,9 @@
     }
     
     private static int partition(double a[], int pivotPos, int high) {
-    	int i = pivotPos+1;
-    	int j = high;
+    	/*
+    	int i = pivotPos;
+    	int j = high + 1 ;
     	boolean swapped = false;
     	while(!swapped) {
     		while(a[i]<a[pivotPos] && i<a.length) {
@@ -85,6 +86,21 @@
         		swapped = true;
         	}
     	}
+    	return j;
+    	*/
+    	int i = pivotPos;
+    	int j = high+1;
+    	while(true) {
+    		while(a[++i] < a[pivotPos]) {
+    			if(i == high) break;
+    		}
+    		while(a[--j] > a[pivotPos]) {
+    			if(j== pivotPos) break;
+    		}
+    		if(i >= j) break;
+    		swap(a, i, j);
+    	}
+    	swap(a, pivotPos, j);
     	return j;
     }//end quicksort
 

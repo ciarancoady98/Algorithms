@@ -58,13 +58,13 @@ public class SortComparisonTest
     	double unsorted[] = {1};
     	
     	assertEquals("Checking an empty array selection sort", Arrays.toString(sorted), Arrays.toString(SortComparison.selectionSort(size1Array)));
-    	size1Array = unsorted;
+    	size1Array = unsorted.clone();
     	assertEquals("Checking an empty array insertion sort", Arrays.toString(sorted), Arrays.toString(SortComparison.insertionSort(size1Array)));
-    	size1Array = unsorted;
+    	size1Array = unsorted.clone();
     	assertEquals("Checking an empty array merge sort recursive", Arrays.toString(sorted), Arrays.toString(SortComparison.mergeSortRecursive(size1Array)));
-    	size1Array = unsorted;
+    	size1Array = unsorted.clone();
     	assertEquals("Checking an empty array merge sort iterative", Arrays.toString(sorted), Arrays.toString(SortComparison.mergeSortIterative(size1Array)));
-    	size1Array = unsorted;
+    	size1Array = unsorted.clone();
     	assertEquals("Checking an empty array quick sort", Arrays.toString(sorted), Arrays.toString(SortComparison.quickSort(size1Array)));
     }
     
@@ -81,13 +81,13 @@ public class SortComparisonTest
     	double unsorted[] = {2, 1};
     	
     	assertEquals("Checking an empty array selection sort", Arrays.toString(sorted), Arrays.toString(SortComparison.selectionSort(size2Array)));
-    	size2Array = unsorted;
+    	size2Array = unsorted.clone();
     	assertEquals("Checking an empty array insertion sort", Arrays.toString(sorted), Arrays.toString(SortComparison.insertionSort(size2Array)));
-    	size2Array = unsorted;
+    	size2Array = unsorted.clone();
     	assertEquals("Checking an empty array merge sort recursive", Arrays.toString(sorted), Arrays.toString(SortComparison.mergeSortRecursive(size2Array)));
-    	size2Array = unsorted;
+    	size2Array = unsorted.clone();
     	assertEquals("Checking an empty array merge sort iterative", Arrays.toString(sorted), Arrays.toString(SortComparison.mergeSortIterative(size2Array)));
-    	size2Array = unsorted;
+    	size2Array = unsorted.clone();
     	assertEquals("Checking an empty array quick sort", Arrays.toString(sorted), Arrays.toString(SortComparison.quickSort(size2Array)));
     }
     
@@ -104,13 +104,13 @@ public class SortComparisonTest
     	double unsorted[] = {2,4,3,10,7,5,9,1,6,8};
     	
     	assertEquals("Checking an empty array selection sort", Arrays.toString(sorted), Arrays.toString(SortComparison.selectionSort(size10Array)));
-    	size10Array = unsorted;
+    	size10Array = unsorted.clone();
     	assertEquals("Checking an empty array insertion sort", Arrays.toString(sorted), Arrays.toString(SortComparison.insertionSort(size10Array)));
-    	size10Array = unsorted;
+    	size10Array = unsorted.clone();
     	assertEquals("Checking an empty array merge sort recursive", Arrays.toString(sorted), Arrays.toString(SortComparison.mergeSortRecursive(size10Array)));
-    	size10Array = unsorted;
+    	size10Array = unsorted.clone();
     	assertEquals("Checking an empty array merge sort iterative", Arrays.toString(sorted), Arrays.toString(SortComparison.mergeSortIterative(size10Array)));
-    	size10Array = unsorted;
+    	size10Array = unsorted.clone();
     	assertEquals("Checking an empty array quick sort", Arrays.toString(sorted), Arrays.toString(SortComparison.quickSort(size10Array)));
     }
     
@@ -127,13 +127,13 @@ public class SortComparisonTest
     	double unsorted[] = {1,2,3,4,5,6,7,8,9,10};
     	
     	assertEquals("Checking an empty array selection sort", Arrays.toString(sorted), Arrays.toString(SortComparison.selectionSort(sortedTest)));
-    	sortedTest = unsorted;
+    	sortedTest = unsorted.clone();
     	assertEquals("Checking an empty array insertion sort", Arrays.toString(sorted), Arrays.toString(SortComparison.insertionSort(sortedTest)));
-    	sortedTest = unsorted;
+    	sortedTest = unsorted.clone();
     	assertEquals("Checking an empty array merge sort recursive", Arrays.toString(sorted), Arrays.toString(SortComparison.mergeSortRecursive(sortedTest)));
-    	sortedTest = unsorted;
+    	sortedTest = unsorted.clone();
     	assertEquals("Checking an empty array merge sort iterative", Arrays.toString(sorted), Arrays.toString(SortComparison.mergeSortIterative(sortedTest)));
-    	sortedTest = unsorted;
+    	sortedTest = unsorted.clone();
     	assertEquals("Checking an empty array quick sort", Arrays.toString(sorted), Arrays.toString(SortComparison.quickSort(sortedTest)));
     }
     
@@ -150,13 +150,13 @@ public class SortComparisonTest
     	double unsorted[] = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
     	
     	assertEquals("Checking an empty array selection sort", Arrays.toString(sorted), Arrays.toString(SortComparison.selectionSort(sameTest)));
-    	sameTest = unsorted;
+    	sameTest = unsorted.clone();
     	assertEquals("Checking an empty array insertion sort", Arrays.toString(sorted), Arrays.toString(SortComparison.insertionSort(sameTest)));
-    	sameTest = unsorted;
+    	sameTest = unsorted.clone();
     	assertEquals("Checking an empty array merge sort recursive", Arrays.toString(sorted), Arrays.toString(SortComparison.mergeSortRecursive(sameTest)));
-    	sameTest = unsorted;
+    	sameTest = unsorted.clone();
     	assertEquals("Checking an empty array merge sort iterative", Arrays.toString(sorted), Arrays.toString(SortComparison.mergeSortIterative(sameTest)));
-    	sameTest = unsorted;
+    	sameTest = unsorted.clone();
     	assertEquals("Checking an empty array quick sort", Arrays.toString(sorted), Arrays.toString(SortComparison.quickSort(sameTest)));
     }
     
@@ -173,13 +173,13 @@ public class SortComparisonTest
     	double unsorted[] = {10,9,8,7,6,5,4,3,2,1,0};
     	
     	assertEquals("Checking an empty array selection sort", Arrays.toString(sorted), Arrays.toString(SortComparison.selectionSort(reverseTest)));
-    	reverseTest = unsorted;
+    	reverseTest = unsorted.clone();
     	assertEquals("Checking an empty array insertion sort", Arrays.toString(sorted), Arrays.toString(SortComparison.insertionSort(reverseTest)));
-    	reverseTest = unsorted;
+    	reverseTest = unsorted.clone();
     	assertEquals("Checking an empty array merge sort recursive", Arrays.toString(sorted), Arrays.toString(SortComparison.mergeSortRecursive(reverseTest)));
-    	reverseTest = unsorted;
+    	reverseTest = unsorted.clone();
     	assertEquals("Checking an empty array merge sort iterative", Arrays.toString(sorted), Arrays.toString(SortComparison.mergeSortIterative(reverseTest)));
-    	reverseTest = unsorted;
+    	reverseTest = unsorted.clone();
     	assertEquals("Checking an empty array quick sort", Arrays.toString(sorted), Arrays.toString(SortComparison.quickSort(reverseTest)));
     }
 
@@ -253,6 +253,12 @@ public class SortComparisonTest
         		sort.selectionSort(tempArray);
         		timeAfter = System.currentTimeMillis();
         		System.out.println("Selection Sort: " + (timeAfter-timeBefore));
+        		
+        		tempArray = numbersArray.clone();
+        		timeBefore = System.currentTimeMillis();
+        		sort.quickSort(tempArray);
+        		timeAfter = System.currentTimeMillis();
+        		System.out.println("Quick Sort: " + (timeAfter-timeBefore));
         		
         	}catch(Exception e) {System.out.println(e);}
     		
