@@ -26,26 +26,39 @@ import org.junit.runners.JUnit4;
 
 /**
  * 	a. Which of the sorting algorithms does the order of input have an impact on? Why?
-		-insertion sort
-		-merge sort
+		-Insertion sort. If the input is partially sorted, insertion sort will run very quickly
+		as it only has few elements that it needs to shift into the correct position. It doesn't
+		have to sort through all the elements which are already sorted. Which could yield a near
+		linear runtime of theata(n), where n is the number of elements.
+		In the other extreme, if the array is sorted in reverse order, this is the worst case for 
+		insertion sort as it must go through every single element shifting it into its correct 
+		position, with a worst case runtime of O(n^2).
+		-Quick sort. If the input is random, this yields the best performance for quick sort with 
+		a runtime of theata(nlog(n)). If the array is already sorted however, this is the worst 
+		case for quick sort. if we take the pivot as being the first element in the array, then 
+		we must increment through every pivot position and also must scan through all the elements 
+		again, when checking if they need to be swapped. This leads to a worst case run time of
+		O(n^2).
 	b. Which algorithm has the biggest difference between the best and worst performance, based
 		on the type of input, for the input of size 1000? Why?
 		-Insertion sort has the biggest difference between the best and worst performance.
-		-In the best case if the array is ordered or nearly ordered nlogn, because it doesn't
-		need to do any sorting
-		-In the worst case if the array is sorted in reverse - n^2, because if it is sorted in
-		reverse we must go through each element to sort it
+		-In the best case if the array is ordered or nearly ordered (file - 1000 sorted) 
+		theata(n), because it doesn't need to do any sorting and thus carries out less operations.
+		-In the worst case if the array is sorted in reverse (file - 1000 reverse order) O(n^2), 
+		because if it is sorted in reverse we must go through each element to sort it.
 	c. Which algorithm has the best/worst scalability, i.e., the difference in performance time
 		based on the input size? Please consider only input files with random order for this answer.
 		-From my testing Merge sort has the best scalability, as its time to sort didn't change when 
-		using the larger files.
-		-From my testing insertion sort seems to have the worst scalability. 
+		using the larger files, whereas the it varied for the other algorithms.
+		-From my testing insertion sort seems to have the worst scalability, as when the file sizes
+		got larger it became the slowest out of all the algorithms. 
 	d. Did you observe any difference between iterative and recursive implementations of merge
 		sort?
 		-I observed that the iterative version ran faster than the Recursive implementation on average.
 		-I think this is due to the extra overhead involved with using recursion (e.g. using the stack).
 	e. Which algorithm is the fastest for each of the 7 input files?
-		-Merge Sort Iterative
+		-Merge Sort Iterative, as it performed the best consistently throughout my testing, no matter 
+		what input file was used.
  */
 
 //-------------------------------------------------------------------------
