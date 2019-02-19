@@ -1,8 +1,5 @@
 import static org.junit.Assert.assertEquals;
-
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,6 +8,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+/*
+ * @author Ciaran Coady
+ * @version HT 2019
+*/
 
 /**
  * 	File Name						Insertion	 MergeIterative	 MergeRecursive		Selection	Quick
