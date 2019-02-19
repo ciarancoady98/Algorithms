@@ -16,12 +16,36 @@ import org.junit.runners.JUnit4;
  * 	File Name						Insertion	 MergeIterative	 MergeRecursive		Selection	Quick
 	numbers10.txt						0				0				0			0			0
 	numbers100.txt						0				0				0			0			0
-	numbers1000.txt						7.66			0.33			0			5.33		0.33
+	numbers1000.txt						7.66			0				0.33		5.33		0.33
 	numbers1000Duplicates.txt			2				0				0			1.33		0.33
-	numbersNearlyOrdered1000.txt		0				0.33			0			1			0
+	numbersNearlyOrdered1000.txt		0				0				0.33		1			0
 	numbersReverse1000.txt				1				0				0			0.33		0.66
 	numbersSorted1000.txt				0				0				0.33		0.33		0.66
  * 
+ */
+
+/**
+ * 	a. Which of the sorting algorithms does the order of input have an impact on? Why?
+		-insertion sort
+		-merge sort
+	b. Which algorithm has the biggest difference between the best and worst performance, based
+		on the type of input, for the input of size 1000? Why?
+		-Insertion sort has the biggest difference between the best and worst performance.
+		-In the best case if the array is ordered or nearly ordered nlogn, because it doesn't
+		need to do any sorting
+		-In the worst case if the array is sorted in reverse - n^2, because if it is sorted in
+		reverse we must go through each element to sort it
+	c. Which algorithm has the best/worst scalability, i.e., the difference in performance time
+		based on the input size? Please consider only input files with random order for this answer.
+		-From my testing Merge sort has the best scalability, as its time to sort didn't change when 
+		using the larger files.
+		-From my testing insertion sort seems to have the worst scalability. 
+	d. Did you observe any difference between iterative and recursive implementations of merge
+		sort?
+		-I observed that the iterative version ran faster than the Recursive implementation on average.
+		-I think this is due to the extra overhead involved with using recursion (e.g. using the stack).
+	e. Which algorithm is the fastest for each of the 7 input files?
+		-Merge Sort Iterative
  */
 
 //-------------------------------------------------------------------------
