@@ -33,7 +33,7 @@ public class CompetitionDijkstra {
 	//Total number of streets in the city
 	private int S;
 	
-	private int[][] graph;
+	private double[][] graph;
     CompetitionDijkstra (String filename, int sA, int sB, int sC){
 
        /* TODO
@@ -59,7 +59,7 @@ public class CompetitionDijkstra {
 					N = Integer.valueOf(line);
 					System.out.println("N = " + N);
 					//create adjacency matrix to store information
-					graph = new int[N][N];
+					graph = new double[N][N];
 					System.out.println("graph created");
 				}
 				else if(lineCount == 2) {
@@ -76,6 +76,8 @@ public class CompetitionDijkstra {
 					double streetLength = scanner.nextDouble();
 					System.out.println((lineCount - 2) + ". A = " + intersectionA + " B = " 
 					+ intersectionB + " street length = " + streetLength);
+					graph[intersectionA][intersectionB] = streetLength;
+					
 				}
 				lineCount++;
 			}
@@ -89,6 +91,13 @@ public class CompetitionDijkstra {
     	/*
     	 * End of file reading and tree building code
     	 */
+    	
+    	for(int i = 0; i < graph.length; i++) {
+    		for(int j = 0; j < graph[i].length; j++) {
+    			System.out.print("" + graph[i][j] + ",");
+    		}
+    		System.out.print("\n");
+    	}
     }
 
 
