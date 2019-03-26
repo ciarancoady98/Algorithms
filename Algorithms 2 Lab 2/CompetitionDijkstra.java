@@ -32,12 +32,20 @@ public class CompetitionDijkstra {
 	private int N;
 	//Total number of streets in the city
 	private int S;
+	
+	private int[][] graph;
     CompetitionDijkstra (String filename, int sA, int sB, int sC){
 
        /* TODO
-        * Store them as a tree?
+        * Store them as a graph using an adjacency matrix
         */
     	
+    	/*
+    	 * Code for Reading in from file and constructing the tree
+    	 */
+    	int walkingSpeedA = sA;
+    	int walkingSpeedB = sB;
+    	int walkingSpeedC = sC;
     	try {
     		String line = "init";
 			FileReader fileReader = new FileReader(filename);
@@ -50,6 +58,9 @@ public class CompetitionDijkstra {
 					//number of intersections (N)
 					N = Integer.valueOf(line);
 					System.out.println("N = " + N);
+					//create adjacency matrix to store information
+					graph = new int[N][N];
+					System.out.println("graph created");
 				}
 				else if(lineCount == 2) {
 					//reading second line
@@ -74,6 +85,10 @@ public class CompetitionDijkstra {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}	
+    	
+    	/*
+    	 * End of file reading and tree building code
+    	 */
     }
 
 
