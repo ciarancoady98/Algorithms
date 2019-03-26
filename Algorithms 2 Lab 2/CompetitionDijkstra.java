@@ -22,24 +22,17 @@ import java.util.Scanner;
  */
 
 public class CompetitionDijkstra {
-
     /**
      * @param filename: A filename containing the details of the city road network
      * @param sA, sB, sC: speeds for 3 contestants
     */
-	
 	//Total number of intersections in the city
 	private int N;
 	//Total number of streets in the city
 	private int S;
-	
-	private double[][] graph;
+	//city road network
+	private double[][] roadNetwork;
     CompetitionDijkstra (String filename, int sA, int sB, int sC){
-
-       /* TODO
-        * Store them as a graph using an adjacency matrix
-        */
-    	
     	/*
     	 * Code for Reading in from file and constructing the tree
     	 */
@@ -59,7 +52,7 @@ public class CompetitionDijkstra {
 					N = Integer.valueOf(line);
 					System.out.println("N = " + N);
 					//create adjacency matrix to store information
-					graph = new double[N][N];
+					roadNetwork = new double[N][N];
 					System.out.println("graph created");
 				}
 				else if(lineCount == 2) {
@@ -76,8 +69,7 @@ public class CompetitionDijkstra {
 					double streetLength = scanner.nextDouble();
 					System.out.println((lineCount - 2) + ". A = " + intersectionA + " B = " 
 					+ intersectionB + " street length = " + streetLength);
-					graph[intersectionA][intersectionB] = streetLength;
-					
+					roadNetwork[intersectionA][intersectionB] = streetLength;
 				}
 				lineCount++;
 			}
@@ -86,15 +78,18 @@ public class CompetitionDijkstra {
 			scanner.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}	
-    	
+		}
     	/*
     	 * End of file reading and tree building code
     	 */
     	
-    	for(int i = 0; i < graph.length; i++) {
-    		for(int j = 0; j < graph[i].length; j++) {
-    			System.out.print("" + graph[i][j] + ",");
+    	/*
+    	 * Code to print the adjacency matrix that 
+    	 * represents the road network
+    	 */
+    	for(int i = 0; i < roadNetwork.length; i++) {
+    		for(int j = 0; j < roadNetwork[i].length; j++) {
+    			System.out.print("" + roadNetwork[i][j] + ",");
     		}
     		System.out.print("\n");
     	}
