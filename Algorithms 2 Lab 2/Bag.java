@@ -1,3 +1,5 @@
+import java.util.PriorityQueue;
+
 //this is a bag object, you can place items in it but 
 //not remove them, it is implemented using a linked list
 public class Bag<T>{
@@ -14,8 +16,12 @@ public class Bag<T>{
             this.next = null;
         }
     }
+    
+    
 	public Bag(){
-		
+		// Creating an empty PriorityQueue 
+        PriorityQueue<String> queue = new PriorityQueue<String>(); 
+  
 	}
 
 }

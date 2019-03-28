@@ -1,3 +1,8 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Scanner;
+
 /*
  * A Contest to Meet (ACM) is a reality TV contest that sets three contestants at three random
  * city intersections. In order to win, the three contestants need all to meet at any intersection
@@ -15,15 +20,63 @@
  * This class implements the competition using Floyd-Warshall algorithm
  */
 
+
 public class CompetitionFloydWarshall {
 
     /**
      * @param filename: A filename containing the details of the city road network
      * @param sA, sB, sC: speeds for 3 contestants
      */
+	//Total number of intersections in the city
+	private int N;
+	//Total number of streets in the city
+	private int S;
+	//city road network
+	private double[] roadNetwork;
     CompetitionFloydWarshall (String filename, int sA, int sB, int sC){
-
-        //TODO
+    	/*
+    	 * Code for Reading in from file and constructing the tree
+    	 */
+    	int walkingSpeedA = sA;
+    	int walkingSpeedB = sB;
+    	int walkingSpeedC = sC;
+    	try {
+    		String line = "init";
+			FileReader fileReader = new FileReader(filename);
+			BufferedReader bufferedReader = new BufferedReader(fileReader);
+			Scanner scanner = new Scanner(line);
+			int lineCount = 1;
+			while((line = bufferedReader.readLine()) != null) {
+				if(lineCount == 1) {
+					//reading first line
+					//number of intersections (N)
+					N = Integer.valueOf(line);
+					System.out.println("N = " + N);
+				}
+				else if(lineCount == 2) {
+					//reading second line
+					//total number of streets (S)
+					S = Integer.valueOf(line);
+					System.out.println("S = " + S);
+				}
+				else if(lineCount > 2) {
+					//need to parse line into separate things
+					scanner = new Scanner(line);
+					int from = scanner.nextInt();
+					int to = scanner.nextInt();
+					double weight = scanner.nextDouble();
+				}
+				lineCount++;
+			}
+			bufferedReader.close();
+			fileReader.close();
+			scanner.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	/*
+    	 * End of file reading and tree building code
+    	 */
     }
 
 

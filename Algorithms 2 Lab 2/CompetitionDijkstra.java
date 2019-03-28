@@ -31,7 +31,8 @@ public class CompetitionDijkstra {
 	//Total number of streets in the city
 	private int S;
 	//city road network
-	private double[][] roadNetwork;
+	//private double[][] roadNetwork;
+	private EdgeWeightedDigraph roadNetwork;
     CompetitionDijkstra (String filename, int sA, int sB, int sC){
     	/*
     	 * Code for Reading in from file and constructing the tree
@@ -51,25 +52,23 @@ public class CompetitionDijkstra {
 					//number of intersections (N)
 					N = Integer.valueOf(line);
 					System.out.println("N = " + N);
-					//create adjacency matrix to store information
-					roadNetwork = new double[N][N];
-					System.out.println("graph created");
 				}
 				else if(lineCount == 2) {
 					//reading second line
 					//total number of streets (S)
 					S = Integer.valueOf(line);
 					System.out.println("S = " + S);
+					//create adjacency matrix to store information
+					roadNetwork = new EdgeWeightedDigraph(N, S);
 				}
 				else if(lineCount > 2) {
 					//need to parse line into separate things
 					scanner = new Scanner(line);
-					int intersectionA = scanner.nextInt();
-					int intersectionB = scanner.nextInt();
-					double streetLength = scanner.nextDouble();
-					System.out.println((lineCount - 2) + ". A = " + intersectionA + " B = " 
-					+ intersectionB + " street length = " + streetLength);
-					roadNetwork[intersectionA][intersectionB] = streetLength;
+					int from = scanner.nextInt();
+					int to = scanner.nextInt();
+					double weight = scanner.nextDouble();
+					DirectedEdge edge =  new DirectedEdge(from, to, weight);
+					roadNetwork.addEdge(edge);
 				}
 				lineCount++;
 			}
@@ -82,17 +81,6 @@ public class CompetitionDijkstra {
     	/*
     	 * End of file reading and tree building code
     	 */
-    	
-    	/*
-    	 * Code to print the adjacency matrix that 
-    	 * represents the road network
-    	 */
-    	for(int i = 0; i < roadNetwork.length; i++) {
-    		for(int j = 0; j < roadNetwork[i].length; j++) {
-    			System.out.print("" + roadNetwork[i][j] + ",");
-    		}
-    		System.out.print("\n");
-    	}
     }
 
 
@@ -101,13 +89,20 @@ public class CompetitionDijkstra {
      */
     public int timeRequiredforCompetition(){
 
-        //TO DO
+        //TODO implement dijkstras
+    	//if a path does not exist between 2 intersections
+    	//then break out and return -1
         return -1;
     }
+    
+    public String toString() {
+		return this.roadNetwork.toString();
+	}
     
     public static void main(String[] args)
     {
     	CompetitionDijkstra comp = new CompetitionDijkstra("tinyEWD.txt", 1, 1, 1);
+    	System.out.print(comp.toString());
     }
 
 }
