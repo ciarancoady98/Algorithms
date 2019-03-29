@@ -33,13 +33,18 @@ public class CompetitionFloydWarshall {
 	private int S;
 	//city road network
 	private Double[][] roadNetwork;
+	private int slowestSpeed;
     CompetitionFloydWarshall (String filename, int sA, int sB, int sC){
     	/*
     	 * Code for Reading in from file and constructing the tree
     	 */
+    	/*
     	int walkingSpeedA = sA;
     	int walkingSpeedB = sB;
     	int walkingSpeedC = sC;
+    	*/
+    	this.slowestSpeed = slowestPerson(sA, sB, sC);
+    	
     	try {
     		String line = "init";
 			FileReader fileReader = new FileReader(filename);
@@ -89,15 +94,20 @@ public class CompetitionFloydWarshall {
     		}
     	}
     }
+    
+    private int slowestPerson(int a, int b, int c) {
+    	int temp = Math.min(a, b);
+    	return Math.min(temp, c);
+    }
 
 
     /**
      * @return int: minimum minutes that will pass before the three contestants can meet
      */
     public int timeRequiredforCompetition(){
-
-        //TODO floyd warshall shortest path
-    	for(int k = 1; k < this.N; k++) {
+    	double timeRequired = -1;
+    	double longestPath = 0;
+    	for(int k = 0; k < this.N; k++) {
     		for(int i = 0; i < this.N; i++) {
     			for(int j = 0; j < this.N; j++) {
     				if(roadNetwork[i][k] + roadNetwork[k][j] < roadNetwork[i][j]) {
@@ -106,7 +116,19 @@ public class CompetitionFloydWarshall {
     			}
     		}
     	}
-        return -1;
+    	//traverse the matrix and see are any entries still infinite
+    	for(int i = 0; i < roadNetwork.length; i++) {
+    		for(int j = 0; j < roadNetwork[i].length; j++) {
+    			if(roadNetwork[i][j] == Double.POSITIVE_INFINITY) {
+    				return -1;
+    			}
+    			else if(roadNetwork[i][j] > longestPath) {
+    				longestPath = roadNetwork[i][j];
+    			}
+    		}
+    	}
+    	timeRequired = (longestPath * 1000) / slowestSpeed;
+        return (int) Math.ceil(timeRequired);
     }
     
     @Override
@@ -123,11 +145,12 @@ public class CompetitionFloydWarshall {
     
     public static void main(String[] args)
     {
-    	CompetitionFloydWarshall comp = new CompetitionFloydWarshall("tinyEWD.txt", 1, 1, 1);
+    	CompetitionFloydWarshall comp = new CompetitionFloydWarshall("tinyEWD.txt", 50, 50, 50);
     	System.out.print(comp.toString());
     	System.out.println("\n\n\n\n shortest path");
-    	comp.timeRequiredforCompetition();
+    	int result = comp.timeRequiredforCompetition();
     	System.out.print(comp.toString());
+    	System.out.println("\n\n\n\n result = " + result);
     }
 
 }
