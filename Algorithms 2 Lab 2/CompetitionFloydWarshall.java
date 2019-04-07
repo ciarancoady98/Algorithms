@@ -93,8 +93,12 @@ public class CompetitionFloydWarshall {
     }
     
     private int slowestPerson(int a, int b, int c) {
-    	int temp = Math.min(a, b);
-    	return Math.min(temp, c);
+    	if(a < 50 || a > 100 || b < 50 || b > 100 || c < 50 || c > 100 )
+    		return -1;
+    	else {
+    		int temp = Math.min(a, b);
+        	return Math.min(temp, c);
+    	}
     }
 
 
@@ -102,6 +106,9 @@ public class CompetitionFloydWarshall {
      * @return int: minimum minutes that will pass before the three contestants can meet
      */
     public int timeRequiredforCompetition(){
+    	if(slowestSpeed == -1 || this.roadNetwork == null) {
+    		return -1;
+    	}
     	double timeRequired = -1;
     	double longestPath = 0;
     	for(int k = 0; k < this.N; k++) {
@@ -142,7 +149,7 @@ public class CompetitionFloydWarshall {
     
     public static void main(String[] args)
     {
-    	CompetitionFloydWarshall comp = new CompetitionFloydWarshall("tinyEWD.txt", 50, 50, 50);
+    	CompetitionFloydWarshall comp = new CompetitionFloydWarshall("1000EWD.txt", 50, 50, 50);
     	System.out.print(comp.toString());
     	System.out.println("\n\n\n\n shortest path");
     	int result = comp.timeRequiredforCompetition();

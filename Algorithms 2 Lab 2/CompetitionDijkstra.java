@@ -1,5 +1,4 @@
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Comparator;
@@ -93,6 +92,9 @@ public class CompetitionDijkstra {
     * @return int: minimum minutes that will pass before the three contestants can meet
      */
     public int timeRequiredforCompetition(){
+    	if(this.slowestSpeed == -1 || this.roadNetwork == null) {
+    		return -1;
+    	}
     	double timeRequired = -1;
     	//this is the longest path a contestant will have to travel
     	double longestPath = -1;
@@ -103,6 +105,7 @@ public class CompetitionDijkstra {
     		for(int destination = 0; destination < this.N; destination++) {
     			//check if any of the vertices are unreachable from source
     			if(shortestPaths[destination] == Double.POSITIVE_INFINITY) {
+    				System.out.println("we found it!! from " + source + " to " + destination);
     				return -1;
     			}
     			//check is the path we found longer than others
@@ -119,8 +122,12 @@ public class CompetitionDijkstra {
     
     //find the slowest person in the competition
     private int slowestPerson(int a, int b, int c) {
-    	int temp = Math.min(a, b);
-    	return Math.min(temp, c);
+    	if(a < 50 || a > 100 || b < 50 || b > 100 || c < 50 || c > 100 )
+    		return -1;
+    	else {
+    		int temp = Math.min(a, b);
+        	return Math.min(temp, c);
+    	}
     }
     
     private double[] dijkstra(EdgeWeightedDigraph graph, int source) {
@@ -144,14 +151,15 @@ public class CompetitionDijkstra {
 				else
 					return 0;
 			}});
+        pq.add(source);
         //start at the source vertex
         int vertex = source;
         //keep count of how many vertices we've relaxed
         int count = 0;
         //if the queue is empty we are done
         boolean queueEmpty = false;
-        while(count < this.roadNetwork.getNumberOfVertices() && !queueEmpty) {
-        	//if the vertex hase edges coming from it
+        while(!queueEmpty) {
+        	//if the vertex has edges coming from it
         	if(!this.roadNetwork.adjacentEdges(vertex).isEmpty()) {
             	for(DirectedEdge edge : this.roadNetwork.adjacentEdges(vertex)) {
                 	relax(edge);
@@ -178,11 +186,9 @@ public class CompetitionDijkstra {
             edgeTo[vertexTo] = edge.from;
             if (pq.contains(vertexTo)) {
             	//update the queue with the new value
-            	pq.poll();
+            	pq.remove(vertexTo);
             }
-            else       
-            	//add it to the queue if its not there
-            	pq.add(vertexTo);
+            pq.add(vertexTo);
         }
     }
     
