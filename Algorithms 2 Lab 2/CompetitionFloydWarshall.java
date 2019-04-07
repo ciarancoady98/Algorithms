@@ -33,16 +33,13 @@ public class CompetitionFloydWarshall {
 	private int S;
 	//city road network
 	private Double[][] roadNetwork;
+	//walking speed of the slowest contestant
 	private int slowestSpeed;
     CompetitionFloydWarshall (String filename, int sA, int sB, int sC){
     	/*
-    	 * Code for Reading in from file and constructing the tree
+    	 * Code for Reading in from file and constructing the graph
     	 */
-    	/*
-    	int walkingSpeedA = sA;
-    	int walkingSpeedB = sB;
-    	int walkingSpeedC = sC;
-    	*/
+    	
     	this.slowestSpeed = slowestPerson(sA, sB, sC);
     	
     	try {
@@ -83,7 +80,7 @@ public class CompetitionFloydWarshall {
 			e.printStackTrace();
 		}
     	/*
-    	 * End of file reading and tree building code
+    	 * End of file reading and graph building code
     	 */
     }
     

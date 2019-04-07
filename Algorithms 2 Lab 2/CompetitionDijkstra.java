@@ -2,6 +2,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 import java.util.Scanner;
 
 /*
@@ -30,19 +32,18 @@ public class CompetitionDijkstra {
 	private int N;
 	//Total number of streets in the city
 	private int S;
-	//city road network
-	//private double[][] roadNetwork;
+	//city road network (stored as adjacency array)
 	private EdgeWeightedDigraph roadNetwork;
 	double[] distTo; //distTo[v] = distance of shortest s->v path
-	DirectedEdge[] edgeTo; //edge[v] = last edge on shortest s->v path
-	private IndexMinPQ<Double> pq; //priority queue of vertices
+	int[] edgeTo; //edge[v] = last edge on shortest s->v path
+	private PriorityQueue<Integer> pq; //priority queue of vertices
+	private int slowestSpeed; //walking speed of the slowest contestant
     CompetitionDijkstra (String filename, int sA, int sB, int sC){
     	/*
-    	 * Code for Reading in from file and constructing the tree
+    	 * Code for Reading in from file and constructing the graph
     	 */
-    	int walkingSpeedA = sA;
-    	int walkingSpeedB = sB;
-    	int walkingSpeedC = sC;
+    	//get the walking speed of the slowest contestant
+    	this.slowestSpeed = slowestPerson(sA, sB, sC);
     	try {
     		String line = "init";
 			FileReader fileReader = new FileReader(filename);
@@ -61,15 +62,16 @@ public class CompetitionDijkstra {
 					//total number of streets (S)
 					S = Integer.valueOf(line);
 					System.out.println("S = " + S);
-					//create adjacency matrix to store information
+					//create adjacency array to store information
 					roadNetwork = new EdgeWeightedDigraph(N, S);
 				}
 				else if(lineCount > 2) {
-					//need to parse line into separate things
+					//need to parse line into separate pieces of information
 					scanner = new Scanner(line);
 					int from = scanner.nextInt();
 					int to = scanner.nextInt();
 					double weight = scanner.nextDouble();
+					//create edge
 					DirectedEdge edge =  new DirectedEdge(from, to, weight);
 					roadNetwork.addEdge(edge);
 				}
@@ -82,7 +84,7 @@ public class CompetitionDijkstra {
 			e.printStackTrace();
 		}
     	/*
-    	 * End of file reading and tree building code
+    	 * End of file reading and graph building code
     	 */
     }
 
@@ -91,36 +93,96 @@ public class CompetitionDijkstra {
     * @return int: minimum minutes that will pass before the three contestants can meet
      */
     public int timeRequiredforCompetition(){
-
-        //TODO implement dijkstras
-    	//if a path does not exist between 2 intersections
-    	//then break out and return -1
+    	double timeRequired = -1;
+    	//this is the longest path a contestant will have to travel
     	double longestPath = -1;
-    	for(int i = 0; i < this.N; i++) {
-    		// relax vertices in order of distance from s
-    		//s is the source vertex
-    		distTo = new double[this.N];
-            edgeTo = new DirectedEdge[this.N];
-            pq = new IndexMinPQ<Double>(this.N);
-            pq.insert(i, distTo[i]);
-            while (!pq.isEmpty()) {
-                int v = pq.delMin();
-                for (DirectedEdge e : G.adj(v))
-                    relax(e);
-            }
+    	//starting at every vertex
+    	for(int source = 0; source < this.N; source++) {
+    		//calculate the shortest paths to every other vertex
+    		double[] shortestPaths = dijkstra(this.roadNetwork, source);
+    		for(int destination = 0; destination < this.N; destination++) {
+    			//check if any of the vertices are unreachable from source
+    			if(shortestPaths[destination] == Double.POSITIVE_INFINITY) {
+    				return -1;
+    			}
+    			//check is the path we found longer than others
+    			else if(shortestPaths[destination] > longestPath) {
+    				longestPath = shortestPaths[destination];
+    			}
+    		}
     	}
-    	
-        return -1;
+    	//convert km to meters and calculate the time it will take
+    	timeRequired = (longestPath * 1000) / slowestSpeed;
+    	//round up the result to the nearest integer
+        return (int) Math.ceil(timeRequired);
     }
     
-    // relax edge e and update pq if changed
-    private void relax(DirectedEdge e) {
-        int v = e.from(), w = e.to();
-        if (distTo[w] > distTo[v] + e.weight()) {
-            distTo[w] = distTo[v] + e.weight();
-            edgeTo[w] = e;
-            if (pq.contains(w)) pq.decreaseKey(w, distTo[w]);
-            else                pq.insert(w, distTo[w]);
+    //find the slowest person in the competition
+    private int slowestPerson(int a, int b, int c) {
+    	int temp = Math.min(a, b);
+    	return Math.min(temp, c);
+    }
+    
+    private double[] dijkstra(EdgeWeightedDigraph graph, int source) {
+    	//distance from source to a vertex
+		distTo = new double[this.N];
+		//the last vertex we came through to get here
+        edgeTo = new int[this.N];
+        //Initialize the values to infinite
+        for(int i = 0; i < distTo.length; i++) {
+        	distTo[i] = Double.POSITIVE_INFINITY;
+        }
+        //initialize the distance from the source to itself to 0
+      	distTo[source] = 0;
+      	//initialize the priority queue with a comparator for our purposes
+        pq = new PriorityQueue<Integer>(new Comparator<Integer>() {
+			public int compare(Integer a, Integer b) {
+				if (distTo[a] > distTo[b])
+				return 1;
+				else if (distTo[a] < distTo[b])
+					return -1;
+				else
+					return 0;
+			}});
+        //start at the source vertex
+        int vertex = source;
+        //keep count of how many vertices we've relaxed
+        int count = 0;
+        //if the queue is empty we are done
+        boolean queueEmpty = false;
+        while(count < this.roadNetwork.getNumberOfVertices() && !queueEmpty) {
+        	//if the vertex hase edges coming from it
+        	if(!this.roadNetwork.adjacentEdges(vertex).isEmpty()) {
+            	for(DirectedEdge edge : this.roadNetwork.adjacentEdges(vertex)) {
+                	relax(edge);
+                }
+                if(!pq.isEmpty()) {
+                	//get the next closest vertex to relax from
+            		vertex = pq.poll();
+            	}
+            	else
+            		//we've exhausted all options and are done
+            		queueEmpty = true;
+            }
+        	count++;
+        }
+        //return the distances to each vertex from the passed source
+    	return distTo;
+    }
+    
+    //relax the passed edge and update the data structures accordingly
+    private void relax(DirectedEdge edge) {
+        int vertexFrom = edge.from, vertexTo = edge.to;
+        if (distTo[vertexTo] > distTo[vertexFrom] + edge.weight) {
+            distTo[vertexTo] = distTo[vertexFrom] + edge.weight;
+            edgeTo[vertexTo] = edge.from;
+            if (pq.contains(vertexTo)) {
+            	//update the queue with the new value
+            	pq.poll();
+            }
+            else       
+            	//add it to the queue if its not there
+            	pq.add(vertexTo);
         }
     }
     
@@ -130,8 +192,10 @@ public class CompetitionDijkstra {
     
     public static void main(String[] args)
     {
-    	CompetitionDijkstra comp = new CompetitionDijkstra("tinyEWD.txt", 1, 1, 1);
+    	CompetitionDijkstra comp = new CompetitionDijkstra("tinyEWD.txt", 50, 50, 50);
+    	int result = comp.timeRequiredforCompetition();
     	System.out.print(comp.toString());
+    	System.out.println("\n\n\n\n result = " + result + " mins");
     }
 
 }
