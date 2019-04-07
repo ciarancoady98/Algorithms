@@ -33,6 +33,9 @@ public class CompetitionDijkstra {
 	//city road network
 	//private double[][] roadNetwork;
 	private EdgeWeightedDigraph roadNetwork;
+	double[] distTo; //distTo[v] = distance of shortest s->v path
+	DirectedEdge[] edgeTo; //edge[v] = last edge on shortest s->v path
+	private IndexMinPQ<Double> pq; //priority queue of vertices
     CompetitionDijkstra (String filename, int sA, int sB, int sC){
     	/*
     	 * Code for Reading in from file and constructing the tree
@@ -92,7 +95,33 @@ public class CompetitionDijkstra {
         //TODO implement dijkstras
     	//if a path does not exist between 2 intersections
     	//then break out and return -1
+    	double longestPath = -1;
+    	for(int i = 0; i < this.N; i++) {
+    		// relax vertices in order of distance from s
+    		//s is the source vertex
+    		distTo = new double[this.N];
+            edgeTo = new DirectedEdge[this.N];
+            pq = new IndexMinPQ<Double>(this.N);
+            pq.insert(i, distTo[i]);
+            while (!pq.isEmpty()) {
+                int v = pq.delMin();
+                for (DirectedEdge e : G.adj(v))
+                    relax(e);
+            }
+    	}
+    	
         return -1;
+    }
+    
+    // relax edge e and update pq if changed
+    private void relax(DirectedEdge e) {
+        int v = e.from(), w = e.to();
+        if (distTo[w] > distTo[v] + e.weight()) {
+            distTo[w] = distTo[v] + e.weight();
+            edgeTo[w] = e;
+            if (pq.contains(w)) pq.decreaseKey(w, distTo[w]);
+            else                pq.insert(w, distTo[w]);
+        }
     }
     
     public String toString() {

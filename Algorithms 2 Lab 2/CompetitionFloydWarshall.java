@@ -90,7 +90,7 @@ public class CompetitionFloydWarshall {
     private void initialiseNetwork() {
     	for(int i = 0; i < roadNetwork.length; i++) {
     		for(int j = 0; j < roadNetwork[i].length; j++) {
-    			roadNetwork[i][j] = Double.POSITIVE_INFINITY;
+    			roadNetwork[i][j] = (i != j) ? Double.POSITIVE_INFINITY : 0;
     		}
     	}
     }
@@ -150,7 +150,7 @@ public class CompetitionFloydWarshall {
     	System.out.println("\n\n\n\n shortest path");
     	int result = comp.timeRequiredforCompetition();
     	System.out.print(comp.toString());
-    	System.out.println("\n\n\n\n result = " + result);
+    	System.out.println("\n\n\n\n result = " + result + " mins");
     }
 
 }
