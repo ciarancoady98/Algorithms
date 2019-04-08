@@ -25,6 +25,7 @@ public class EdgeWeightedDigraph {
 	public LinkedList<DirectedEdge> adjacentEdges(int vertex){
 		return adj[vertex];
 	}
+	/*
 	public DirectedEdge[] edges(){
 		DirectedEdge[] edges = new DirectedEdge[this.numberOfEdges];
 		int edgesIndex = 0;
@@ -37,6 +38,7 @@ public class EdgeWeightedDigraph {
 		}
 		return edges;
 	}
+	
 	public int getNumberOfVertices() {
 		return this.numberOfVertices;
 	}
@@ -46,6 +48,7 @@ public class EdgeWeightedDigraph {
 	public int getNumberOfEdges() {
 		return this.numberOfEdges;
 	}
+	
 	public String toString() {
         StringBuilder s = new StringBuilder();
         s.append(numberOfVertices + " " + numberOfEdges + "\n");
@@ -59,4 +62,5 @@ public class EdgeWeightedDigraph {
         }
         return s.toString();
     }
+    */
 }

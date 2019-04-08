@@ -54,17 +54,17 @@ public class CompetitionDijkstra {
 					//reading first line
 					//number of intersections (N)
 					N = Integer.valueOf(line);
-					System.out.println("N = " + N);
+					//System.out.println("N = " + N);
 				}
 				else if(lineCount == 2) {
 					//reading second line
 					//total number of streets (S)
 					S = Integer.valueOf(line);
-					System.out.println("S = " + S);
+					//System.out.println("S = " + S);
 					//create adjacency array to store information
 					roadNetwork = new EdgeWeightedDigraph(N, S);
 				}
-				else if(lineCount > 2) {
+				else {
 					//need to parse line into separate pieces of information
 					scanner = new Scanner(line);
 					int from = scanner.nextInt();
@@ -105,7 +105,6 @@ public class CompetitionDijkstra {
     		for(int destination = 0; destination < this.N; destination++) {
     			//check if any of the vertices are unreachable from source
     			if(shortestPaths[destination] == Double.POSITIVE_INFINITY) {
-    				System.out.println("we found it!! from " + source + " to " + destination);
     				return -1;
     			}
     			//check is the path we found longer than others
@@ -154,8 +153,6 @@ public class CompetitionDijkstra {
         pq.add(source);
         //start at the source vertex
         int vertex = source;
-        //keep count of how many vertices we've relaxed
-        int count = 0;
         //if the queue is empty we are done
         boolean queueEmpty = false;
         while(!queueEmpty) {
@@ -172,7 +169,6 @@ public class CompetitionDijkstra {
             		//we've exhausted all options and are done
             		queueEmpty = true;
             }
-        	count++;
         }
         //return the distances to each vertex from the passed source
     	return distTo;
@@ -192,16 +188,10 @@ public class CompetitionDijkstra {
         }
     }
     
+    /*
+     * Used for debugging
     public String toString() {
 		return this.roadNetwork.toString();
 	}
-    
-    public static void main(String[] args)
-    {
-    	CompetitionDijkstra comp = new CompetitionDijkstra("tinyEWD.txt", 50, 50, 50);
-    	int result = comp.timeRequiredforCompetition();
-    	System.out.print(comp.toString());
-    	System.out.println("\n\n\n\n result = " + result + " mins");
-    }
-
+	*/
 }

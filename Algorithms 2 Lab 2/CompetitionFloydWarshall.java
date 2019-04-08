@@ -53,7 +53,7 @@ public class CompetitionFloydWarshall {
 					//reading first line
 					//number of intersections (N)
 					N = Integer.valueOf(line);
-					System.out.println("N = " + N);
+					//System.out.println("N = " + N);
 					roadNetwork = new Double[N][N];
 					initialiseNetwork();
 				}
@@ -61,9 +61,9 @@ public class CompetitionFloydWarshall {
 					//reading second line
 					//total number of streets (S)
 					S = Integer.valueOf(line);
-					System.out.println("S = " + S);
+					//System.out.println("S = " + S);
 				}
-				else if(lineCount > 2) {
+				else {
 					//need to parse line into separate things
 					scanner = new Scanner(line);
 					int from = scanner.nextInt();
@@ -135,7 +135,8 @@ public class CompetitionFloydWarshall {
         return (int) Math.ceil(timeRequired);
     }
     
-    @Override
+    /*
+     * Used for debugging
     public String toString() {
     	String output = "";
     	for(int i = 0; i < roadNetwork.length; i++) {
@@ -146,15 +147,5 @@ public class CompetitionFloydWarshall {
     	}
     	return output;
     }
-    
-    public static void main(String[] args)
-    {
-    	CompetitionFloydWarshall comp = new CompetitionFloydWarshall("1000EWD.txt", 50, 50, 50);
-    	System.out.print(comp.toString());
-    	System.out.println("\n\n\n\n shortest path");
-    	int result = comp.timeRequiredforCompetition();
-    	System.out.print(comp.toString());
-    	System.out.println("\n\n\n\n result = " + result + " mins");
-    }
-
+    */
 }

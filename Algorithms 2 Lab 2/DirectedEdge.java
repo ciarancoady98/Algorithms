@@ -8,6 +8,7 @@ public class DirectedEdge {
 		this.to = to;
 		this.weight = weight;
 	}
+	/*
 	public void setFrom(int vertex) {
 		this.from = vertex;
 	}
@@ -30,4 +31,5 @@ public class DirectedEdge {
 		return "from = " + this.from + " to = " + this.to 
 				+ " street length = " + this.weight;
 	}
+	*/
 }
