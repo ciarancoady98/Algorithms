@@ -1,8 +1,11 @@
 import java.util.LinkedList;
 
 public class EdgeWeightedDigraph {
+	@SuppressWarnings("unused")
 	private final int numberOfVertices;
+	@SuppressWarnings("unused")
 	private int numberOfEdges;
+	@SuppressWarnings("rawtypes")
 	private LinkedList[] adj;
     private int[] indegree;
 	EdgeWeightedDigraph(int numberOfVertices, int numberOfEdges){
@@ -15,6 +18,7 @@ public class EdgeWeightedDigraph {
 			adj[i] = new LinkedList<DirectedEdge>(); 
 		}
 	}
+	@SuppressWarnings("unchecked")
 	public void addEdge(DirectedEdge edge) {
 		adj[edge.from].add(edge);
 		updateDegree(edge.from);
@@ -22,6 +26,7 @@ public class EdgeWeightedDigraph {
 	private void updateDegree(int vertex) {
 		indegree[vertex] = indegree[vertex] + 1;
 	}
+	@SuppressWarnings("unchecked")
 	public LinkedList<DirectedEdge> adjacentEdges(int vertex){
 		return adj[vertex];
 	}

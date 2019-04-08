@@ -42,46 +42,50 @@ public class CompetitionDijkstra {
     	 * Code for Reading in from file and constructing the graph
     	 */
     	//get the walking speed of the slowest contestant
-    	this.slowestSpeed = slowestPerson(sA, sB, sC);
-    	try {
-    		String line = "init";
-			FileReader fileReader = new FileReader(filename);
-			BufferedReader bufferedReader = new BufferedReader(fileReader);
-			Scanner scanner = new Scanner(line);
-			int lineCount = 1;
-			while((line = bufferedReader.readLine()) != null) {
-				if(lineCount == 1) {
-					//reading first line
-					//number of intersections (N)
-					N = Integer.valueOf(line);
-					//System.out.println("N = " + N);
-				}
-				else if(lineCount == 2) {
-					//reading second line
-					//total number of streets (S)
-					S = Integer.valueOf(line);
-					//System.out.println("S = " + S);
-					//create adjacency array to store information
-					roadNetwork = new EdgeWeightedDigraph(N, S);
-				}
-				else {
-					//need to parse line into separate pieces of information
-					scanner = new Scanner(line);
-					int from = scanner.nextInt();
-					int to = scanner.nextInt();
-					double weight = scanner.nextDouble();
-					//create edge
-					DirectedEdge edge =  new DirectedEdge(from, to, weight);
-					roadNetwork.addEdge(edge);
-				}
-				lineCount++;
-			}
-			bufferedReader.close();
-			fileReader.close();
-			scanner.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+    	if(filename != null) {
+    		this.slowestSpeed = slowestPerson(sA, sB, sC);
+    		try {
+        		String line = "init";
+    			FileReader fileReader = new FileReader(filename);
+    			BufferedReader bufferedReader = new BufferedReader(fileReader);
+    			Scanner scanner = new Scanner(line);
+    			int lineCount = 1;
+    			while((line = bufferedReader.readLine()) != null) {
+    				if(lineCount == 1) {
+    					//reading first line
+    					//number of intersections (N)
+    					N = Integer.valueOf(line);
+    					//System.out.println("N = " + N);
+    				}
+    				else if(lineCount == 2) {
+    					//reading second line
+    					//total number of streets (S)
+    					S = Integer.valueOf(line);
+    					//System.out.println("S = " + S);
+    					if(N > 0) {
+    						//create adjacency array to store information
+        					roadNetwork = new EdgeWeightedDigraph(N, S);
+    					}
+    				}
+    				else if(roadNetwork != null){
+    					//need to parse line into separate pieces of information
+    					scanner = new Scanner(line);
+    					int from = scanner.nextInt();
+    					int to = scanner.nextInt();
+    					double weight = scanner.nextDouble();
+    					//create edge
+    					DirectedEdge edge =  new DirectedEdge(from, to, weight);
+    					roadNetwork.addEdge(edge);
+    				}
+    				lineCount++;
+    			}
+    			bufferedReader.close();
+    			fileReader.close();
+    			scanner.close();
+    		} catch (IOException e) {
+    			e.printStackTrace();
+    		}
+    	}
     	/*
     	 * End of file reading and graph building code
     	 */
@@ -141,7 +145,8 @@ public class CompetitionDijkstra {
         //initialize the distance from the source to itself to 0
       	distTo[source] = 0;
       	//initialize the priority queue with a comparator for our purposes
-        pq = new PriorityQueue<Integer>(new Comparator<Integer>() {
+      	Comparator<Integer> queueComparator = new Comparator<Integer>() {
+        	@Override
 			public int compare(Integer a, Integer b) {
 				if (distTo[a] > distTo[b])
 				return 1;
@@ -149,13 +154,17 @@ public class CompetitionDijkstra {
 					return -1;
 				else
 					return 0;
-			}});
+			}
+      	};
+        pq = new PriorityQueue<Integer>(this.N, queueComparator);
         pq.add(source);
         //start at the source vertex
         int vertex = source;
+        //number of relaxed vertices
+        int count = 0;
         //if the queue is empty we are done
         boolean queueEmpty = false;
-        while(!queueEmpty) {
+        while(count < this.N && !queueEmpty) {
         	//if the vertex has edges coming from it
         	if(!this.roadNetwork.adjacentEdges(vertex).isEmpty()) {
             	for(DirectedEdge edge : this.roadNetwork.adjacentEdges(vertex)) {
@@ -165,10 +174,13 @@ public class CompetitionDijkstra {
                 	//get the next closest vertex to relax from
             		vertex = pq.poll();
             	}
+                /*
             	else
             		//we've exhausted all options and are done
             		queueEmpty = true;
+            	*/
             }
+        	count++;
         }
         //return the distances to each vertex from the passed source
     	return distTo;

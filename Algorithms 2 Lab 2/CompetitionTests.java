@@ -14,13 +14,13 @@ public class CompetitionTests {
 		assertEquals(dijkstra.timeRequiredforCompetition(), floydWarshall.timeRequiredforCompetition());
 
 		// test if both algorithms agree with the slowest speed and large file
-		dijkstra = new CompetitionDijkstra("1000EWD.txt", 50, 50, 50);
-		floydWarshall = new CompetitionFloydWarshall("1000EWD.txt", 50, 50, 50);
+		dijkstra = new CompetitionDijkstra("tinyEWD.txt", 50, 50, 50);
+		floydWarshall = new CompetitionFloydWarshall("tinyEWD.txt", 50, 50, 50);
 		assertEquals(dijkstra.timeRequiredforCompetition(), floydWarshall.timeRequiredforCompetition());
 		
 		// test if both algorithms agree with the fastest speed and large file
-		dijkstra = new CompetitionDijkstra("1000EWD.txt", 100, 100, 100);
-		floydWarshall = new CompetitionFloydWarshall("1000EWD.txt", 100, 100, 100);
+		dijkstra = new CompetitionDijkstra("tinyEWD.txt", 100, 100, 100);
+		floydWarshall = new CompetitionFloydWarshall("tinyEWD.txt", 100, 100, 100);
 		assertEquals(dijkstra.timeRequiredforCompetition(), floydWarshall.timeRequiredforCompetition());
 		
 	}
@@ -55,21 +55,87 @@ public class CompetitionTests {
 		CompetitionFloydWarshall floydWarshall = new CompetitionFloydWarshall("tinyEWD.txt", 20, 50, 50);
 		assertEquals(floydWarshall.timeRequiredforCompetition(), -1);
 		
+		// test speed too slow
+		dijkstra = new CompetitionDijkstra("tinyEWD.txt", 50, 20, 50);
+		assertEquals(dijkstra.timeRequiredforCompetition(), -1);
+		floydWarshall = new CompetitionFloydWarshall("tinyEWD.txt", 50, 20, 50);
+		assertEquals(floydWarshall.timeRequiredforCompetition(), -1);
+		
+		// test speed too slow
+		dijkstra = new CompetitionDijkstra("tinyEWD.txt", 50, 50, 20);
+		assertEquals(dijkstra.timeRequiredforCompetition(), -1);
+		floydWarshall = new CompetitionFloydWarshall("tinyEWD.txt", 50, 50, 20);
+		assertEquals(floydWarshall.timeRequiredforCompetition(), -1);
+		
+		// test with speed too fast
+		dijkstra = new CompetitionDijkstra("tinyEWD.txt", 100, 50, 50);
+		floydWarshall = new CompetitionFloydWarshall("tinyEWD.txt", 100, 50, 50);
+		assertEquals(dijkstra.timeRequiredforCompetition(), floydWarshall.timeRequiredforCompetition());
+		
+		// test with speed too fast
+		dijkstra = new CompetitionDijkstra("tinyEWD.txt", 50, 100, 50);
+		floydWarshall = new CompetitionFloydWarshall("tinyEWD.txt", 50, 100, 50);
+		assertEquals(dijkstra.timeRequiredforCompetition(), floydWarshall.timeRequiredforCompetition());
+		
 		// test with speed too fast
 		dijkstra = new CompetitionDijkstra("tinyEWD.txt", 50, 50, 100);
 		floydWarshall = new CompetitionFloydWarshall("tinyEWD.txt", 50, 50, 100);
 		assertEquals(dijkstra.timeRequiredforCompetition(), floydWarshall.timeRequiredforCompetition());
 		
+		// test with speed too fast
+		dijkstra = new CompetitionDijkstra("tinyEWD.txt", 100, 100, 100);
+		floydWarshall = new CompetitionFloydWarshall("tinyEWD.txt", 100, 100, 100);
+		assertEquals(dijkstra.timeRequiredforCompetition(), floydWarshall.timeRequiredforCompetition());
+		
+		// test with speed too slow
+		dijkstra = new CompetitionDijkstra("tinyEWD.txt", 0, 0, 0);
+		floydWarshall = new CompetitionFloydWarshall("tinyEWD.txt", 0, 0, 0);
+		assertEquals(dijkstra.timeRequiredforCompetition(), floydWarshall.timeRequiredforCompetition());
+		
+		// test with mixed speeds
+		dijkstra = new CompetitionDijkstra("tinyEWD.txt", 0, 10000, 10);
+		floydWarshall = new CompetitionFloydWarshall("tinyEWD.txt", 2000, -1, 3);
+		assertEquals(dijkstra.timeRequiredforCompetition(), floydWarshall.timeRequiredforCompetition());
 		
 	}
 	
 	@Test
-	public void testConnectedComponents() {
+	public void nullFile() {
 		// test if the result is -1 for games with isolated vertices
-		CompetitionDijkstra dijkstra = new CompetitionDijkstra("missingRoads.txt", 50, 50, 50);
+		CompetitionDijkstra dijkstra = new CompetitionDijkstra(null, 50, 50, 50);
 		assertEquals(dijkstra.timeRequiredforCompetition(), -1);
 		
-		CompetitionFloydWarshall floydWarshall = new CompetitionFloydWarshall("missingRoads.txt", 50, 50, 50);
+		CompetitionFloydWarshall floydWarshall = new CompetitionFloydWarshall(null, 50, 50, 50);
+		assertEquals(floydWarshall.timeRequiredforCompetition(), -1);
+	}
+	
+	@Test
+	public void testfile() {
+		// test if the result is -1 for games with isolated vertices
+		CompetitionDijkstra dijkstra = new CompetitionDijkstra("testfile.txt", 60, 50, 75);
+		assertEquals(dijkstra.timeRequiredforCompetition(), -1);
+		
+		CompetitionFloydWarshall floydWarshall = new CompetitionFloydWarshall("testfile.txt", 50, 50, 50);
+		assertEquals(floydWarshall.timeRequiredforCompetition(), -1);
+	}
+	
+	@Test
+	public void emptyFile() {
+		// test if the result is -1 for games with isolated vertices
+		CompetitionDijkstra dijkstra = new CompetitionDijkstra("short.txt", 50, 50, 50);
+		assertEquals(dijkstra.timeRequiredforCompetition(), -1);
+		
+		CompetitionFloydWarshall floydWarshall = new CompetitionFloydWarshall("short.txt", 50, 50, 50);
+		assertEquals(floydWarshall.timeRequiredforCompetition(), -1);
+	}
+	
+	@Test
+	public void emptyFile2() {
+		// test if the result is -1 for games with isolated vertices
+		CompetitionDijkstra dijkstra = new CompetitionDijkstra("short2.txt", 50, 50, 50);
+		assertEquals(dijkstra.timeRequiredforCompetition(), -1);
+		
+		CompetitionFloydWarshall floydWarshall = new CompetitionFloydWarshall("short2.txt", 50, 50, 50);
 		assertEquals(floydWarshall.timeRequiredforCompetition(), -1);
 	}
 }

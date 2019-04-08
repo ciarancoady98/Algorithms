@@ -39,46 +39,48 @@ public class CompetitionFloydWarshall {
     	/*
     	 * Code for Reading in from file and constructing the graph
     	 */
-    	
-    	this.slowestSpeed = slowestPerson(sA, sB, sC);
-    	
-    	try {
-    		String line = "init";
-			FileReader fileReader = new FileReader(filename);
-			BufferedReader bufferedReader = new BufferedReader(fileReader);
-			Scanner scanner = new Scanner(line);
-			int lineCount = 1;
-			while((line = bufferedReader.readLine()) != null) {
-				if(lineCount == 1) {
-					//reading first line
-					//number of intersections (N)
-					N = Integer.valueOf(line);
-					//System.out.println("N = " + N);
-					roadNetwork = new Double[N][N];
-					initialiseNetwork();
-				}
-				else if(lineCount == 2) {
-					//reading second line
-					//total number of streets (S)
-					S = Integer.valueOf(line);
-					//System.out.println("S = " + S);
-				}
-				else {
-					//need to parse line into separate things
-					scanner = new Scanner(line);
-					int from = scanner.nextInt();
-					int to = scanner.nextInt();
-					double weight = scanner.nextDouble();
-					roadNetwork[from][to] = weight;
-				}
-				lineCount++;
-			}
-			bufferedReader.close();
-			fileReader.close();
-			scanner.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+    	if(filename != null) {
+    		this.slowestSpeed = slowestPerson(sA, sB, sC);
+    		try {
+        		String line = "init";
+    			FileReader fileReader = new FileReader(filename);
+    			BufferedReader bufferedReader = new BufferedReader(fileReader);
+    			Scanner scanner = new Scanner(line);
+    			int lineCount = 1;
+    			while((line = bufferedReader.readLine()) != null) {
+    				if(lineCount == 1) {
+    					//reading first line
+    					//number of intersections (N)
+    					N = Integer.valueOf(line);
+    					//System.out.println("N = " + N);
+    					if(N > 0) {
+    						roadNetwork = new Double[N][N];
+        					initialiseNetwork();
+    					}
+    				}
+    				else if(lineCount == 2) {
+    					//reading second line
+    					//total number of streets (S)
+    					S = Integer.valueOf(line);
+    					//System.out.println("S = " + S);
+    				}
+    				else if(roadNetwork != null){
+    					//need to parse line into separate things
+    					scanner = new Scanner(line);
+    					int from = scanner.nextInt();
+    					int to = scanner.nextInt();
+    					double weight = scanner.nextDouble();
+    					roadNetwork[from][to] = weight;
+    				}
+    				lineCount++;
+    			}
+    			bufferedReader.close();
+    			fileReader.close();
+    			scanner.close();
+    		} catch (IOException e) {
+    			e.printStackTrace();
+    		}
+    	}
     	/*
     	 * End of file reading and graph building code
     	 */
