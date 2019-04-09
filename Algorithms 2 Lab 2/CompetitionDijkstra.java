@@ -1,3 +1,4 @@
+//@Author:Ciaran Coady
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -35,7 +36,7 @@ public class CompetitionDijkstra {
 	private EdgeWeightedDigraph roadNetwork;
 	double[] distTo; //distTo[v] = distance of shortest s->v path
 	int[] edgeTo; //edge[v] = last edge on shortest s->v path
-	private PriorityQueue<Integer> pq; //priority queue of vertices
+	PriorityQueue<Integer> pq; //priority queue of vertices
 	private int slowestSpeed; //walking speed of the slowest contestant
     CompetitionDijkstra (String filename, int sA, int sB, int sC){
     	/*
@@ -144,19 +145,7 @@ public class CompetitionDijkstra {
         }
         //initialize the distance from the source to itself to 0
       	distTo[source] = 0;
-      	//initialize the priority queue with a comparator for our purposes
-      	Comparator<Integer> queueComparator = new Comparator<Integer>() {
-        	@Override
-			public int compare(Integer a, Integer b) {
-				if (distTo[a] > distTo[b])
-				return 1;
-				else if (distTo[a] < distTo[b])
-					return -1;
-				else
-					return 0;
-			}
-      	};
-        pq = new PriorityQueue<Integer>(this.N, queueComparator);
+        this.pq = makeQueue();
         pq.add(source);
         //start at the source vertex
         int vertex = source;
@@ -198,6 +187,22 @@ public class CompetitionDijkstra {
             }
             pq.add(vertexTo);
         }
+    }
+    
+    public PriorityQueue<Integer> makeQueue(){
+    	//initialize the priority queue with a comparator for our purposes
+      	Comparator<Integer> queueComparator = new Comparator<Integer>() {
+        	@Override
+			public int compare(Integer a, Integer b) {
+				if (distTo[a] > distTo[b])
+				return 1;
+				else if (distTo[a] < distTo[b])
+					return -1;
+				else
+					return 0;
+			}
+      	};
+      	return new PriorityQueue<Integer>(this.N, queueComparator);
     }
     
     /*

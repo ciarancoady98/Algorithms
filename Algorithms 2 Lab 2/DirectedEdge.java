@@ -1,4 +1,4 @@
-
+//@Author:Ciaran Coady
 public class DirectedEdge {
 	double weight;
 	int from;
